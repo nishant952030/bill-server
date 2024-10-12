@@ -138,9 +138,8 @@ const actionRequest = async (req, res) => {
                 success: false,
             });
         }
-
         const request = await Request.findById(requestId);
-
+         
         if (action === 'accept') {
             self.friends.push(senderId);
             sender.friends.push(userId);
@@ -151,7 +150,7 @@ const actionRequest = async (req, res) => {
 
             // Delete the request after accepting
             await Request.deleteOne({ _id: requestId });
-
+            await request.save();
             return res.status(200).json({
                 message: "Friend request accepted",
                 success: true,
