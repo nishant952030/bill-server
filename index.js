@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const router = require("./routes/route");
 const searchrouter = require("./routes/searchroute");
+const expenserouter = require("./routes/expenseRoute");
 const mongoose = require("mongoose");
 require('dotenv').config(); // Add this line to load environment variables
 
@@ -13,25 +14,10 @@ const port = process.env.PORT || 8000; // Use PORT from .env or default to 8000
 app.use(express.json()); // Body parser for JSON
 app.use(cookieParser()); // Cookie parser
 
-
-const allowedOrigins = [
-    'http://your-frontend-domain.com', // Web app
-    'http://another-frontend-domain.com', // If you have multiple domains
-    'capacitor://localhost', // For Capacitor-based mobile apps (if using)
-    'ionic://localhost',     // For Ionic-based mobile apps (if using)
-    'http://localhost:3000', // For development (if your frontend runs on localhost)
-];
-
+// CORS configuration to allow your frontend to communicate with backend
 app.use(cors({
-    origin: (origin, callback) => {
-        // Allow requests with no origin, like mobile apps
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true // Allow credentials (cookies, authorization headers)
+    origin: 'http://localhost:3000', // Replace with your front-end origin
+    credentials: true // Allow credentials (cookies, authorization headers, etc.)
 }));
 
 // MongoDB connection
@@ -45,6 +31,7 @@ mongoose.connect(process.env.MONGO_URI, { // Use environment variable for MongoD
 // Routes
 app.use('/user', router);
 app.use('/search', searchrouter);
+app.use('/expense', expenserouter);
 
 // Start the server
 app.listen(port, () => {
