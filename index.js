@@ -13,9 +13,9 @@ const port = process.env.PORT || 8000; // Use PORT from .env or default to 8000
 app.use(express.json()); // Body parser for JSON
 app.use(cookieParser()); // Cookie parser
 
-// CORS configuration to allow your frontend to communicate with backend
+
 const allowedOrigins = [
-     // Web app
+    'http://your-frontend-domain.com', // Web app
     'http://another-frontend-domain.com', // If you have multiple domains
     'capacitor://localhost', // For Capacitor-based mobile apps (if using)
     'ionic://localhost',     // For Ionic-based mobile apps (if using)
