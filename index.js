@@ -15,7 +15,7 @@ app.use(cookieParser()); // Cookie parser
 
 // CORS configuration to allow your frontend to communicate with backend
 app.use(cors({
-    origin: 'http://localhost:3000', // Replace with your front-end origin
+    origin: '*', // Replace with your front-end origin
     credentials: true // Allow credentials (cookies, authorization headers, etc.)
 }));
 
