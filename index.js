@@ -14,9 +14,7 @@ const port = process.env.PORT || 8000; // Use PORT from .env or default to 8000
 
 app.use(express.json()); // Body parser for JSON
 app.use(cookieParser()); // Cookie parser
-
-// CORS configuration
-const allowedOrigins = [
+const allowedOrigins = ['*',
     'https://bill-splitter-zeta.vercel.app',
     'capacitor://localhost',
     'ionic://localhost',
@@ -25,16 +23,16 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: (origin, callback) => {
+        console.log(origin)
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true // Allow credentials
+    credentials: true
 }));
 
-// MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
